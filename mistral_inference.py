@@ -4,11 +4,6 @@ import jsonlines
 import pandas as pd
 from transformers import pipeline, Pipeline
 
-model = pipeline(
-    "text-generation",
-    model="mistralai/Mistral-7B-Instruct-v0.1",
-)
-
 
 def model_inference(model: Pipeline, tweet: str) -> Optional[str]:
     system_prompt = """YOU ARE AN EXPERT IN SENTIMENT ANALYSIS OF SOCIAL MEDIA CONTENT, SPECIALIZING IN TWITTER DATA. YOUR TASK IS TO ACCURATELY CATEGORIZE TWEETS INTO ONE OF THREE SENTIMENTS: POSITIVE, NEUTRAL, OR NEGATIVE. THE OUTPUT MUST BE A STRING WITH THE CLASSIFIED SENTIMENT.
@@ -84,11 +79,15 @@ if __name__ == "__main__":
                  4: 'user', 5: 'text'}
     )
     shuffled_data = sentiment140_data.sample(frac=1).reset_index(drop=True)
+    model = pipeline(
+        "text-generation",
+        model="mistralai/Mistral-7B-Instruct-v0.1",
+    )
 
     for index, row in shuffled_data[:1000].iterrows():
         tweet = row['text']
         gt_sentiment = "negative" if row['target'] == 0 else "positive"
-        pred_sentiment = model_inference(tweet)
+        pred_sentiment = model_inference(model, tweet)
         jsonlines.open("output_data_mistral7b.jsonl", "a").write({
             "tweet": tweet,
             "gt_sentiment": gt_sentiment,
