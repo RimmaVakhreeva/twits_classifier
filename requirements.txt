@@ -1,4 +1,4 @@
-fastapi
+fastapi~=0.111.1
 numpy~=1.26.4
 pillow~=10.3.0
 jsonlines~=4.0.0
@@ -7,3 +7,10 @@ torch~=2.2.2
 transformers~=4.43.0
 litellm~=1.41.24
 scikit-learn~=1.4.2
+uvicorn~=0.30.3
+pydantic~=2.6.1
+gdown~=5.2.0
+nltk~=3.8.1
+tqdm~=4.66.2
+matplotlib~=3.8.4
+seaborn~=0.13.2
