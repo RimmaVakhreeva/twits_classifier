@@ -716,7 +716,7 @@ def predict(model, ds, tweet: str) -> int:
     # Disable gradient calculation for inference
     with torch.no_grad():
         # Encode the tweet into a tensor and add a batch dimension
-        item = torch.tensor(ds.encode(tweet), dtype=torch.float32, device='cpu')[None, ...]
+        item = torch.tensor(ds.encode(tweet), dtype=torch.float32, device='cuda')[None, ...]
 
         # Get the model's output probabilities for the input tweet
         probs = model(item).sigmoid()
@@ -873,7 +873,7 @@ if __name__ == "__main__":
         dropout_rate=0.05,  # Set the dropout rate for the model
         batch_size=256,  # Set the batch size for training
         datasets=("Sentiment140",),  # Specify the dataset to be used for training
-        cuda=False,  # Disable CUDA (GPU) usage for training
+        cuda=True,  # Disable CUDA (GPU) usage for training
         ds_limit_size=1600000  # Limit the dataset size to 1,600,000 samples
     )
 
