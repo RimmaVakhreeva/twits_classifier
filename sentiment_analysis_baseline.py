@@ -32,7 +32,6 @@ from sklearn.metrics import confusion_matrix, f1_score
 from torch.optim.lr_scheduler import StepLR
 from torch.utils.data import DataLoader
 
-from metrics_calculation import metrics
 
 # Download necessary NLTK data files
 nltk.download('stopwords')
