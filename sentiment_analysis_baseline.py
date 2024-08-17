@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 import nltk
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -30,6 +31,8 @@ from nltk.tokenize import word_tokenize
 from sklearn.metrics import confusion_matrix, f1_score
 from torch.optim.lr_scheduler import StepLR
 from torch.utils.data import DataLoader
+
+from metrics_calculation import metrics
 
 # Download necessary NLTK data files
 nltk.download('stopwords')
@@ -835,6 +838,21 @@ def train(
     conf_matrix = confusion_matrix(all_targets, all_predictions)  # Calculate confusion matrix
     f1 = f1_score(all_targets, all_predictions, average='weighted')  # Calculate F1 score
 
+    sns.heatmap(conf_matrix,
+                annot=True,  # Annotate cells with the numeric value
+                fmt='g',  # Format for the annotations
+                xticklabels=['Positive', 'Negative'],  # X-axis labels
+                yticklabels=['Positive', 'Negative'])  # Y-axis labels
+    plt.ylabel('Actual', fontsize=13)  # Set the Y-axis label
+    plt.title('Confusion Matrix', fontsize=17, pad=20)  # Set the title of the plot
+    plt.gca().xaxis.set_label_position('top')  # Move the X-axis label to the top
+    plt.xlabel('Prediction', fontsize=13)  # Set the X-axis label
+    plt.gca().xaxis.tick_top()  # Move the ticks to the top of the X-axis
+
+    plt.gca().figure.subplots_adjust(bottom=0.2)  # Adjust the subplot parameters
+    plt.gca().figure.text(0.5, 0.05, 'Prediction', ha='center', fontsize=13)  # Add text to the figure
+    plt.show()  # Display the plot
+
     print(f"Confusion Matrix:\n{conf_matrix}")  # Print confusion matrix
     print(f"F1 Score: {f1:.4f}")  # Print F1 score
 
@@ -862,4 +880,10 @@ if __name__ == "__main__":
 
     plot_acc(train_acc, test_acc)  # Plot the training and testing accuracies
 
-    print(predict(model, ds, "Chair"))  # Make a prediction on the input "Chair" and print the result
+    # Make a prediction on the tweet and print the result
+    print(predict(model, ds, "I forgot to eat my ice-cream"))
+    print(predict(model, ds, "This job is not so good"))
+    print(predict(model, ds, "I am very happy with this product"))
+    print(predict(model, ds, "I am very disappointed with this product"))
+    print(predict(model, ds, "This supermarket is over there"))
+
