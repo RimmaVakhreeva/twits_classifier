@@ -742,7 +742,7 @@ def train(
         learning_rate: float = 0.005,
         lr_step_size: int = 1,
         lr_gamma: float = 0.6,
-        datasets: Tuple = ("STSGd", "Sentiment140"),
+        datasets: Tuple = ("Sentiment140",),
         num_workers: int = 16,
         cuda: bool = True,
         ds_limit_size: Optional[int] = None

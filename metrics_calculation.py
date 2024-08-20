@@ -42,7 +42,7 @@ def metrics(data: jsonlines) -> tuple:
 
 
 # Load data from a JSON Lines file
-data = list(jsonlines.open("output_data_gpt4o.jsonl", "r"))
+data = list(jsonlines.open("output_data.jsonl", "r"))
 # Print the accuracy rounded to 2 decimal places
 print(f'accuracy: {round(metrics(data)[0], 2)}')
 # Print the F1 score rounded to 2 decimal places
